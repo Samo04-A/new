@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trimite Date</title>
+</head>
+<body>
+  <h1>Trimite un Link și un Mesaj</h1>
+  
+  <form id="dataForm">
+    <label for="link">Link:</label>
+    <input type="text" id="link" name="link" required>
+    <br><br>
+    <label for="message">Mesaj:</label>
+    <input type="text" id="message" name="message" required>
+    <br><br>
+    <button type="submit">Trimite</button>
+  </form>
+
+  <script>
+    document.getElementById('dataForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const link = document.getElementById('link').value;
+      const message = document.getElementById('message').value;
+
+      try {
+        const response = await fetch('/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ link, message }),
+        });
+
+        const result = await response.text();
+        alert(result);
+      } catch (error) {
+        console.error('Eroare:', error);
+        alert('A apărut o eroare la trimiterea datelor!');
+      }
+    });
+  </script>
+</body>
+</html>
